@@ -1,0 +1,27 @@
+<%= form_with(model: minute) do |form| %>
+  <% if minute.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(minute.errors.count, "error") %> prohibited this minute from being saved:</h2>
+
+      <ul>
+        <% minute.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :release_branch, style: "display: block" %>
+    <%= form.text_field :release_branch %>
+  </div>
+
+  <div>
+    <%= form.label :release_note, style: "display: block" %>
+    <%= form.text_field :release_note %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
