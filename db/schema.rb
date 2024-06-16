@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_15_231148) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_16_002105) do
   create_table "minutes", force: :cascade do |t|
     t.string "release_branch"
     t.string "release_note"
@@ -22,6 +22,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_15_231148) do
     t.string "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "minute_id", null: false
+    t.index ["minute_id"], name: "index_topics_on_minute_id"
   end
 
+  add_foreign_key "topics", "minutes"
 end

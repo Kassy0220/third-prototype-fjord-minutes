@@ -8,4 +8,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  namespace :api do
+    resources :minutes do
+      resources :topics, only: [:index, :create], controller: "/api/minutes/topics"
+    end
+  end
 end
