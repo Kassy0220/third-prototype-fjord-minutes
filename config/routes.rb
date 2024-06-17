@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   namespace :api do
-    resources :minutes do
+    resources :minutes, only: [:show, :update] do
       resources :topics, only: [:index, :create], controller: "/api/minutes/topics"
     end
   end

@@ -1,5 +1,4 @@
 class Api::Minutes::TopicsController < ApplicationController
-  # 検証用のメソッドなので削除すること
   def index
     minute = Minute.find(params[:minute_id])
     topics = minute.topics
