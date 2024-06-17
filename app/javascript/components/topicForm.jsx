@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useSWRConfig } from "swr";
 
-export default function TopicForm({ minuteId }) {
+export default function TopicForm({ minute_id }) {
     const [content, setContent] = useState('');
+    const { mutate } = useSWRConfig();
+    const topicsURL = `/api/minutes/${minute_id}/topics`;
 
     const handleInputChange = (e) => {
         setContent(e.target.value);
@@ -12,7 +15,7 @@ export default function TopicForm({ minuteId }) {
         const csrfToken = document.head.querySelector("meta[name=csrf-token]")?.content;
 
         try {
-            const response = await fetch(`/api/minutes/${minuteId}/topics`, {
+            const response = await fetch(`/api/minutes/${minute_id}/topics`, {
                 method: 'POST',
                 body: JSON.stringify(parameter),
                 headers: {
@@ -21,7 +24,11 @@ export default function TopicForm({ minuteId }) {
                 }
             })
 
-            if (response.status !== 200) throw Error(response.statusText);
+            if (response.status === 201) {
+                setContent('');
+                mutate(topicsURL);
+            }
+            if (response.status !== 201) throw Error(response.statusText);
         } catch (e) {
             console.log(e);
         }
