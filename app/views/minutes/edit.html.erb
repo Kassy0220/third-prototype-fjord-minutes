@@ -1,4 +1,4 @@
-<h1>Editing minute</h1>
+<h1><%= @minute.title %></h1>
 
 <%= content_tag :div, id: 'release_branch_form', data: {minute_id: @minute.id}.to_json do %><% end %>
 <%= content_tag :div, id: 'release_note_form', data: {minute_id: @minute.id}.to_json do %><% end %>

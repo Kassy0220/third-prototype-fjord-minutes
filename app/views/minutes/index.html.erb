@@ -4,9 +4,8 @@
 
 <div id="minutes">
   <% @minutes.each do |minute| %>
-    <%= render minute %>
     <p>
-      <%= link_to "Show this minute", minute %>
+      <%= link_to minute.title, minute %>
     </p>
   <% end %>
 </div>
