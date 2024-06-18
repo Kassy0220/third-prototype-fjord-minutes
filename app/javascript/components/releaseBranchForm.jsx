@@ -61,24 +61,28 @@ const EditForm = ({ releaseBranch, setIsEditing, minuteId }) => {
     }
 
     return (
-        <div>
-            <input
-                type="text"
-                id="release_branch"
-                value={inputValue}
-                onChange={handleInput}
-            />
-            <button onClick={handleClick}>更新</button>
-        </div>
+        <>
+            <p>リリースブランチ</p>
+            <div>
+                <input
+                    type="text"
+                    id="release_branch"
+                    value={inputValue}
+                    onChange={handleInput}
+                />
+                <button onClick={handleClick}>更新</button>
+            </div>
+        </>
     )
 }
 
 const ReleaseBranch = ({ releaseBranch, setIsEditing }) => {
-    const branchInfo = releaseBranch ? `リリースブランチ : ${releaseBranch}` : 'リリースブランチ : 未登録';
+    const branchInfo = releaseBranch ? releaseBranch : '未登録';
     return (
         <>
-            <p>{branchInfo}</p>
+            <p>リリースブランチ</p>
             <div>
+                <span>{branchInfo}</span>
                 <button onClick={() => {
                     setIsEditing(true)
                 }}>

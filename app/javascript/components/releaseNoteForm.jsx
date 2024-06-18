@@ -61,24 +61,28 @@ const EditForm = ({ releaseNote, setIsEditing, minuteId }) => {
     }
 
     return (
-        <div>
-            <input
-                type="text"
-                id="release_note"
-                value={inputValue}
-                onChange={handleInput}
-            />
-            <button onClick={handleClick}>更新</button>
-        </div>
+        <>
+            <p>リリースノート</p>
+            <div>
+                <input
+                    type="text"
+                    id="release_note"
+                    value={inputValue}
+                    onChange={handleInput}
+                />
+                <button onClick={handleClick}>更新</button>
+            </div>
+        </>
     )
 }
 
 const ReleaseNote = ({ releaseNote, setIsEditing }) => {
-    const branchInfo = releaseNote ? `リリースノート : ${releaseNote}` : 'リリースノート : 未登録';
+    const noteInfo = releaseNote ? releaseNote : '未登録';
     return (
         <>
-            <p>{branchInfo}</p>
+            <p>リリースノート</p>
             <div>
+                <span>{noteInfo}</span>
                 <button onClick={() => {
                     setIsEditing(true)
                 }}>
