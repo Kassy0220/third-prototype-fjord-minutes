@@ -2,25 +2,25 @@ import React, { useState } from "react";
 import useSWR, { mutate } from "swr";
 import fetcher from "../fetcher";
 
-export default function ReleaseBranchForm({ minute_id }) {
+export default function ReleaseNoteForm({ minute_id }) {
     const { data, error, isLoading } = useSWR(`/api/minutes/${minute_id}`, fetcher);
     const [isEditing, setIsEditing] = useState(false);
 
     if (error) return <div>エラーが発生しました！</div>;
     if (isLoading) return <div>読み込み中です...</div>;
 
-    const releaseBranch = data.release_branch;
+    const releaseNote = data.release_note;
     return (
         <>
             {isEditing ?
                 <EditForm
-                    releaseBranch={releaseBranch}
+                    releaseNote={releaseNote}
                     setIsEditing={setIsEditing}
                     minuteId={minute_id}
                 />
                 :
-                <ReleaseBranch
-                    releaseBranch={releaseBranch}
+                <ReleaseNote
+                    releaseNote={releaseNote}
                     setIsEditing={setIsEditing}
                 />
             }
@@ -28,15 +28,15 @@ export default function ReleaseBranchForm({ minute_id }) {
     )
 }
 
-const EditForm = ({ releaseBranch, setIsEditing, minuteId }) => {
-    const [inputValue, setInputValue] = useState(releaseBranch)
+const EditForm = ({ releaseNote, setIsEditing, minuteId }) => {
+    const [inputValue, setInputValue] = useState(releaseNote)
     const handleInput = (e) => {
         setInputValue(e.target.value);
     }
 
     const handleClick = async function(e) {
         e.preventDefault();
-        const parameter = { minute: { release_branch: inputValue } };
+        const parameter = { minute: { release_note: inputValue } };
         const csrfToken = document.head.querySelector("meta[name=csrf-token]")?.content;
 
         try {
@@ -64,7 +64,7 @@ const EditForm = ({ releaseBranch, setIsEditing, minuteId }) => {
         <div>
             <input
                 type="text"
-                id="release_branch"
+                id="release_note"
                 value={inputValue}
                 onChange={handleInput}
             />
@@ -73,8 +73,8 @@ const EditForm = ({ releaseBranch, setIsEditing, minuteId }) => {
     )
 }
 
-const ReleaseBranch = ({ releaseBranch, setIsEditing }) => {
-    const branchInfo = releaseBranch ? `リリースブランチ : ${releaseBranch}` : 'リリースブランチ : 未登録';
+const ReleaseNote = ({ releaseNote, setIsEditing }) => {
+    const branchInfo = releaseNote ? `リリースノート : ${releaseNote}` : 'リリースノート : 未登録';
     return (
         <>
             <p>{branchInfo}</p>

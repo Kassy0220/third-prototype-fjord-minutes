@@ -7,7 +7,6 @@ class Api::MinutesController < ApplicationController
   def update
     minute = Minute.find(params[:id])
     if minute.update(minute_params)
-      p minute.release_branch
       render json: minute, status: :ok
     else
       render json: minute.errors, status: :unprocessable_entity
