@@ -6,3 +6,33 @@ input[type="text"] {
 button {
     margin-left: 1em;
 }
+
+#release_branch_form p, #release_note_form p {
+    padding-left: 32px;
+    margin-bottom: 0;
+}
+
+#release_branch_form p:before, #release_note_form p:before {
+    content:  "";
+    width:  6px;
+    height:  6px;
+    display:  inline-block;
+    background-color: #000000;
+    border-radius:  50%;
+    margin-right: 0.5em;
+}
+
+#release_branch_form div, #release_note_form div {
+    padding-left: 64px;
+}
+
+#release_branch_form div:before, #release_note_form div:before {
+    content:  "";
+    width:  6px;
+    height:  6px;
+    display:  inline-block;
+    background-color: #ffffff;
+    border-radius:  50%;
+    border: solid 1px #000000;
+    margin-right: 0.5em;
+}

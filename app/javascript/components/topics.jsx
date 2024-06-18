@@ -9,11 +9,8 @@ export default function Topics({ minute_id }) {
     if (isLoading) return <div>読み込み中です...</div>
 
     return (
-        <>
-            <p>関心ごと一覧</p>
-            <ul>
-                {data.map((topic) => <li key={topic.id}>{topic.content}</li>)}
-            </ul>
-        </>
+        <ul>
+            {data.map((topic) => <li key={topic.id}>{topic.content}</li>)}
+        </ul>
     )
 }
