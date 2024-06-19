@@ -3,6 +3,11 @@ input[type="text"] {
     padding: 0.5em 0.3em;
 }
 
+textarea {
+    width: 400px;
+    resize: vertical;
+}
+
 button {
     margin-left: 1em;
 }
@@ -35,4 +40,8 @@ button {
     border-radius:  50%;
     border: solid 1px #000000;
     margin-right: 0.5em;
+}
+
+#other {
+    vertical-align:middle;
 }

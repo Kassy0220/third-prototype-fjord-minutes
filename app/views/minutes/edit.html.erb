@@ -10,6 +10,8 @@
 <%= content_tag :div, id: 'topics', data: {minute_id: @minute.id}.to_json do %><% end %>
 <%= content_tag :div, id: 'topic_form', data: {minute_id: @minute.id}.to_json do %><% end %>
 
+<h2>その他</h2>
+<%= content_tag :div, id: 'other_form', data: {minute_id: @minute.id}.to_json do %><% end %>
 
 <div>
   <%= link_to "Show this minute", @minute %> |
