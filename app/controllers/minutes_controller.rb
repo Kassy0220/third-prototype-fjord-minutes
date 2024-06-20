@@ -65,6 +65,6 @@ class MinutesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def minute_params
-      params.require(:minute).permit(:release_branch, :release_note)
+      params.require(:minute).permit(:title, :release_branch, :release_note, :other)
     end
 end
