@@ -9,7 +9,6 @@ export default function OtherForm({ minute_id }) {
     if (isLoading) return <div>読み込み中です...</div>;
 
     const other = data.other;
-    console.log(`Otherがレンダーされました!${data.other}`);
     return (
         <>
             <TextArea
@@ -29,7 +28,6 @@ function TextArea({other, minuteId}) {
 
     const handleInput = (e) => {
         setInputValue(e.target.value);
-        console.log(inputValue)
     }
 
     const handleClick = async function(e) {
