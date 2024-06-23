@@ -1,28 +1,36 @@
-import React, { useState } from "react";
-import useSWR, { mutate } from "swr";
-import fetcher from "../fetcher";
+import React, { useState, useEffect } from "react";
+import consumer from "../channels/consumer";
 
-export default function ReleaseInformationForm({ minute_id, informationType }) {
-    const { data, error, isLoading } = useSWR(`/api/minutes/${minute_id}`, fetcher);
+export default function ReleaseInformationForm({ minute_id, informationType, release_information }) {
+    const [releaseInformation, setReleaseInformation] = useState(release_information)
     const [isEditing, setIsEditing] = useState(false);
 
-    if (error) return <div>エラーが発生しました！</div>;
-    if (isLoading) return <div>読み込み中です...</div>;
+    useEffect(() => {
+        consumer.subscriptions.create({ channel: 'MinuteChannel', id: minute_id }, {
+            received(data) {
+                if (informationType === 'releaseBranch') {
+                    setReleaseInformation(data.body.release_branch)
+                } else {
+                    setReleaseInformation(data.body.release_note)
+                }
 
-    const informationContent = informationType === 'releaseBranch' ? data.release_branch : data.release_note;
+            }
+        });
+    }, [minute_id]);
+
     return (
         <>
             {isEditing ?
                 <EditForm
                     informationType={informationType}
-                    informationContent={informationContent}
+                    informationContent={releaseInformation}
                     setIsEditing={setIsEditing}
                     minuteId={minute_id}
                 />
                 :
                 <ReleaseInformation
                     informationType={informationType}
-                    informationContent={informationContent}
+                    informationContent={releaseInformation}
                     setIsEditing={setIsEditing}
                 />
             }
@@ -61,7 +69,6 @@ const EditForm = ({ informationType, informationContent, setIsEditing, minuteId 
 
             if (response.status === 200) {
                 setIsEditing(false);
-                mutate(`/api/minutes/${minuteId}`);
             } else {
                 throw Error(response.statusText);
             }

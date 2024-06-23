@@ -8,6 +8,7 @@ class Api::MinutesController < ApplicationController
     minute = Minute.find(params[:id])
     if minute.update(minute_params)
       render json: minute, status: :ok
+      MinuteChannel.broadcast_to(minute, { body: minute.as_json(only: [:release_branch, :release_note]) })
     else
       render json: minute.errors, status: :unprocessable_entity
     end
