@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import useSWR, { mutate } from "swr";
-import fetcher from "../fetcher";
+import consumer from "../channels/consumer";
 
-export default function OtherForm({ minute_id }) {
-    const { data, error, isLoading } = useSWR(`/api/minutes/${minute_id}`, fetcher);
+export default function OtherForm({ minute_id, content }) {
+    const [other, setOther] = useState(content);
 
-    if (error) return <div>エラーが発生しました！</div>;
-    if (isLoading) return <div>読み込み中です...</div>;
+    useEffect(() => {
+        consumer.subscriptions.create({ channel: 'MinuteChannel', id: minute_id }, {
+            received(data) {
+                setOther(data.body.other);
+            }
+        });
+    }, [minute_id]);
 
-    const other = data.other;
     return (
         <>
             <TextArea
@@ -46,7 +49,6 @@ function TextArea({other, minuteId}) {
             })
 
             if (response.status === 200) {
-                mutate(`/api/minutes/${minuteId}`);
                 console.log('保存されました')
             } else {
                 throw Error(response.statusText);
