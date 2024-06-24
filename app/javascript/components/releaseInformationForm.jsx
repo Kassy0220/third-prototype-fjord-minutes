@@ -14,6 +14,9 @@ export default function ReleaseInformationForm({ minute_id, informationType, rel
                     } else {
                         setReleaseInformation(data.body.minute.release_note)
                     }
+                    informationType === 'releaseBranch' ?
+                        setReleaseInformation(data.body.minute.release_branch) :
+                        setReleaseInformation(data.body.minute.release_note)
                 }
             }
         });

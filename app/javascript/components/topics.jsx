@@ -7,9 +7,7 @@ export default function Topics({ minute_id, minute_topics }) {
     useEffect(() => {
         consumer.subscriptions.create({ channel: 'MinuteChannel', id: minute_id }, {
             received(data) {
-                if ('topics' in data.body) {
-                    setTopics([...data.body.topics])
-                }
+                if ('topics' in data.body) setTopics([...data.body.topics])
             }
         });
     }, [minute_id]);
