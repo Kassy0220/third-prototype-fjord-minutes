@@ -1,16 +1,22 @@
-import React from 'react';
-import useSWR from "swr";
-import fetcher from '../fetcher';
+import React, { useState, useEffect } from 'react';
+import consumer from "../channels/consumer";
 
-export default function Topics({ minute_id }) {
-    const { data, error, isLoading } = useSWR(`/api/minutes/${minute_id}/topics`, fetcher)
+export default function Topics({ minute_id, minute_topics }) {
+    const [topics, setTopics] = useState(minute_topics);
 
-    if (error) return <div>エラーが発生しました！</div>
-    if (isLoading) return <div>読み込み中です...</div>
+    useEffect(() => {
+        consumer.subscriptions.create({ channel: 'MinuteChannel', id: minute_id }, {
+            received(data) {
+                if ('topics' in data.body) {
+                    setTopics([...data.body.topics])
+                }
+            }
+        });
+    }, [minute_id]);
 
     return (
         <ul>
-            {data.map((topic) => <li key={topic.id}>{topic.content}</li>)}
+            {topics.map((topic) => <li key={topic.id}>{topic.content}</li>)}
         </ul>
     )
 }

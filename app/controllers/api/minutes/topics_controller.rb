@@ -10,6 +10,7 @@ class Api::Minutes::TopicsController < ApplicationController
     @topic = minute.topics.create(topic_params)
     if @topic
       render json: @topic, status: :created
+      MinuteChannel.broadcast_to(minute, { body: { topics: minute.topics } })
     else
       render json: @topic.errors, status: :unprocessable_entity
     end

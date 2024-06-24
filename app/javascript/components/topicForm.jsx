@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { useSWRConfig } from "swr";
 
 export default function TopicForm({ minute_id }) {
     const [content, setContent] = useState('');
-    const { mutate } = useSWRConfig();
-    const topicsURL = `/api/minutes/${minute_id}/topics`;
 
     const handleInputChange = (e) => {
         setContent(e.target.value);
@@ -26,7 +23,6 @@ export default function TopicForm({ minute_id }) {
 
             if (response.status === 201) {
                 setContent('');
-                mutate(topicsURL);
             }
             if (response.status !== 201) throw Error(response.statusText);
         } catch (e) {

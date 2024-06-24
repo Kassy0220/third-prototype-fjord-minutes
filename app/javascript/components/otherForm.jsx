@@ -7,7 +7,9 @@ export default function OtherForm({ minute_id, content }) {
     useEffect(() => {
         consumer.subscriptions.create({ channel: 'MinuteChannel', id: minute_id }, {
             received(data) {
-                setOther(data.body.other);
+                if ('minute' in data.body) {
+                    setOther(data.body.minute.other);
+                }
             }
         });
     }, [minute_id]);

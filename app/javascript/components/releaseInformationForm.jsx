@@ -8,12 +8,13 @@ export default function ReleaseInformationForm({ minute_id, informationType, rel
     useEffect(() => {
         consumer.subscriptions.create({ channel: 'MinuteChannel', id: minute_id }, {
             received(data) {
-                if (informationType === 'releaseBranch') {
-                    setReleaseInformation(data.body.release_branch)
-                } else {
-                    setReleaseInformation(data.body.release_note)
+                if ('minute' in data.body) {
+                    if (informationType === 'releaseBranch') {
+                        setReleaseInformation(data.body.minute.release_branch)
+                    } else {
+                        setReleaseInformation(data.body.minute.release_note)
+                    }
                 }
-
             }
         });
     }, [minute_id]);
