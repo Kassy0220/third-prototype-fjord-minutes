@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import consumer from "../channels/consumer";
 
 export default function OtherForm({ minute_id, content }) {
-    const [other, setOther] = useState(content);
+    const [other, setOther] = useState(content ? content : '');
 
     useEffect(() => {
         consumer.subscriptions.create({ channel: 'MinuteChannel', id: minute_id }, {
