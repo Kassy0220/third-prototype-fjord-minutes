@@ -1,7 +1,6 @@
 class Api::MinutesController < ApplicationController
   def show
-    minute = Minute.find(params[:id])
-    render json: minute
+    @minute = Minute.find(params[:id])
   end
 
   def update

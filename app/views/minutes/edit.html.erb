@@ -2,6 +2,9 @@
 
 <h2>ふりかえり</h2>
 
+<h3>出席</h3>
+<%= content_tag :div, id: 'attendances', data: {minute_id: @minute.id}.to_json do %><% end %>
+
 <h3>今週のリリースの確認</h3>
 <p>木曜日の15時頃リリースします。</p>
 <%= content_tag :div, id: 'release_branch_form', data: {minute_id: @minute.id, informationType: 'releaseBranch', release_information: @minute.release_branch}.to_json do %><% end %>
