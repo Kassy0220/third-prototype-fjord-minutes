@@ -2,7 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import fetcher from "../fetcher";
 
-export default function Attendances({ minute_id}) {
+export default function Attendee({ minute_id}) {
     const { data, error, isLoading } = useSWR(`/api/minutes/${minute_id}`, fetcher)
 
     if (error) return <p>エラーが発生しました</p>
@@ -16,13 +16,13 @@ export default function Attendances({ minute_id}) {
                 <ul>
                     <li>
                         昼
-                        <Participants
+                        <Members
                             attendances={data.day}
                         />
                     </li>
                     <li>
                         夜
-                        <Participants
+                        <Members
                             attendances={data.night}
                         />
                     </li>
@@ -48,7 +48,7 @@ export default function Attendances({ minute_id}) {
     )
 }
 
-function Participants({ attendances }) {
+function Members({ attendances }) {
     if (attendances.length === 0) {
         return null
     }
