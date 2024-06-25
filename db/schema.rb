@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_25_003249) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_25_041345) do
+  create_table "attendances", force: :cascade do |t|
+    t.integer "time"
+    t.string "absence_reason"
+    t.string "progress_report"
+    t.integer "minute_id", null: false
+    t.integer "member_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_attendances_on_member_id"
+    t.index ["minute_id"], name: "index_attendances_on_minute_id"
+  end
+
   create_table "members", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -40,5 +52,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_003249) do
     t.index ["minute_id"], name: "index_topics_on_minute_id"
   end
 
+  add_foreign_key "attendances", "members"
+  add_foreign_key "attendances", "minutes"
   add_foreign_key "topics", "minutes"
 end
