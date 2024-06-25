@@ -3,4 +3,8 @@ class Member < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def login_name
+    email.slice(/^[^@]+/)
+  end
 end
