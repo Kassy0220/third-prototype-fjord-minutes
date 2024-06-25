@@ -45,3 +45,18 @@ button {
 #other {
     vertical-align:middle;
 }
+
+
+/*出席登録のデザイン*/
+.attendance_form_item {
+    margin-bottom: 1em;
+}
+
+.attendance_form_item p {
+    margin: 0;
+}
+
+.attendance_form_item textarea {
+    resize: none;
+    height: 12em;
+}

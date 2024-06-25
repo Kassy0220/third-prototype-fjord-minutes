@@ -1,0 +1,27 @@
+<%= form_with(model: [minute, attendance]) do |form| %>
+  <div class="attendance_form_item">
+    <p>出欠</p>
+    <%= form.radio_button :time, 'day' %>
+    <%= form.label :time_day, '昼の部' %>
+
+    <%= form.radio_button :time, 'night' %>
+    <%= form.label :time_night, '夜の部' %>
+
+    <%= form.radio_button :time, 'absence' %>
+    <%= form.label :time_absence, '欠席' %>
+  </div>
+
+  <div class="attendance_form_item">
+    <%= form.label :absence_reason, style: "display: block" %>
+    <%= form.text_field :absence_reason %>
+  </div>
+
+  <div class="attendance_form_item">
+    <%= form.label :progress_report, style: "display: block" %>
+    <%= form.text_area :progress_report %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

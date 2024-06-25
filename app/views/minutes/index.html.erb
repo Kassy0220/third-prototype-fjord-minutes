@@ -7,6 +7,9 @@
     <p>
       <%= link_to minute.title, minute %>
     </p>
+    <span id="attendance_link">
+      <%= link_to '出席を登録', new_minute_attendance_path(minute.id) %>
+    </span>
   <% end %>
 </div>
 
