@@ -15,11 +15,6 @@
 <h3>その他</h3>
 <%= content_tag :div, id: 'other_form', data: {minute_id: @minute.id, content: @minute.other}.to_json do %><% end %>
 
-<div>
-  <%= link_to "Show this minute", @minute %> |
-  <%= link_to "Back to minutes", minutes_path %>
-</div>
-
 <h2>次回のMTG</h2>
 <p>TODO : 次回のミーティングの日付を表示する</p>
 <ul>
@@ -31,3 +26,8 @@
 <ul>
   <li>プランニングポーカー</li>
 </ul>
+
+<div>
+  <%= link_to "Show this minute", @minute %> |
+  <%= link_to "Back to minutes", minutes_path %>
+</div>
