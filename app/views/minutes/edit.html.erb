@@ -19,11 +19,7 @@
 <%= content_tag :div, id: 'other_form', data: {minute_id: @minute.id, content: @minute.other}.to_json do %><% end %>
 
 <h2>次回のMTG</h2>
-<p>TODO : 次回のミーティングの日付を表示する</p>
-<ul>
-  <li>昼の部：15:00-16:00</li>
-  <li>夜の部：22:00-23:00</li>
-</ul>
+<%= content_tag :div, id: 'next_date_form', data: {minute_id: @minute.id, next_date: @minute.next_date}.to_json do %><% end %>
 
 <h2>計画ミーティング</h2>
 <ul>
