@@ -6,6 +6,7 @@ import ReleaseInformationForm from "./components/releaseInformationForm";
 import Topics from "./components/topics";
 import TopicForm from './components/topicForm';
 import OtherForm from './components/otherForm';
+import Absentee from "./components/absentee";
 import {mountComponent} from "./mountComponent";
 import { Turbo } from "@hotwired/turbo-rails";
 
@@ -18,3 +19,4 @@ mountComponent('release_note_form', ReleaseInformationForm);
 mountComponent('topics', Topics);
 mountComponent('topic_form', TopicForm);
 mountComponent('other_form', OtherForm);
+mountComponent('absentee', Absentee);

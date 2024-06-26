@@ -7,7 +7,6 @@ export default function Attendee({ minute_id}) {
 
     if (error) return <p>エラーが発生しました</p>
     if (isLoading) return <p>読み込み中</p>
-    console.log(data)
 
     return (
         <ul>

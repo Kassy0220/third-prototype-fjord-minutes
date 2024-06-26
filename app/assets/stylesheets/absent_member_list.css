@@ -1,0 +1,30 @@
+.absent_member_name {
+    padding-left: 32px;
+    margin-bottom: 0;
+}
+
+.absent_member_name:before {
+    content:  "";
+    width:  6px;
+    height:  6px;
+    display:  inline-block;
+    background-color: #000000;
+    border-radius:  50%;
+    margin-right: 0.5em;
+}
+
+.absent_report p {
+    padding-left: 64px;
+
+}
+
+.absent_report p:before {
+    content:  "";
+    width:  6px;
+    height:  6px;
+    display:  inline-block;
+    background-color: #ffffff;
+    border-radius:  50%;
+    border: solid 1px #000000;
+    margin-right: 0.5em;
+}
