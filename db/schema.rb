@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_25_041345) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_26_213308) do
   create_table "attendances", force: :cascade do |t|
     t.integer "time"
     t.string "absence_reason"
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_041345) do
     t.datetime "updated_at", null: false
     t.string "title"
     t.text "other"
+    t.date "next_date"
   end
 
   create_table "topics", force: :cascade do |t|
