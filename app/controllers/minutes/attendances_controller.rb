@@ -1,5 +1,5 @@
 class Minutes::AttendancesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:new, :edit, :create, :update]
+  skip_before_action :authenticate_member!, only: [:new, :edit, :create, :update]
   before_action :set_attendance, only: %i[ edit update destroy ]
 
   # GET /attendances/new
