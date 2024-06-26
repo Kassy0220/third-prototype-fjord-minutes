@@ -1,5 +1,5 @@
 class MinutesController < ApplicationController
-  skip_before_action :authenticate_member!, only: [:index]
+  skip_before_action :authenticate_member!, only: [:index, :show, :new, :edit, :create, :update]
   before_action :set_minute, only: %i[ show edit update destroy ]
 
   # GET /minutes or /minutes.json
