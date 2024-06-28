@@ -92,7 +92,7 @@ class MarkdownBuilder
     add_to_markdown(<<~NEXT_MEETING)
       # 次回のMTG
 
-      - #{@minute.next_date.strftime('%Y年%m月%d日')} (水)
+      - #{@minute.next_date&.strftime('%Y年%m月%d日')} (水)
         - 昼の部：15:00-16:00
         - 夜の部：22:00-23:00
 
