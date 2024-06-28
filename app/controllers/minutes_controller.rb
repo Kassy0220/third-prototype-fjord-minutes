@@ -9,6 +9,7 @@ class MinutesController < ApplicationController
 
   # GET /minutes/1 or /minutes/1.json
   def show
+    @markdown = MarkdownBuilder.new(@minute).build
   end
 
   # GET /minutes/new

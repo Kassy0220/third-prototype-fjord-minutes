@@ -1,24 +1,3 @@
-<div id="<%= dom_id minute %>">
-  <h1><%= minute.title %></h1>
+<h1><%= @minute.title %></h1>
 
-  <p>
-    <strong>Release branch:</strong>
-    <%= minute.release_branch %>
-  </p>
-
-  <p>
-    <strong>Release note:</strong>
-    <%= minute.release_note %>
-  </p>
-
-  <p>
-    <strong>Other:</strong>
-    <%= minute.other %>
-  </p>
-
-  <p>
-    <strong>Next date:</strong>
-    <%= minute.next_date %>
-  </p>
-
-</div>
+<%= content_tag :div, id: 'minute_preview', data: {markdown: @markdown}.to_json do %><% end %>

@@ -8,6 +8,7 @@ import TopicForm from './components/topicForm';
 import OtherForm from './components/otherForm';
 import NextDateForm from "./components/nextDateForm";
 import Absentee from "./components/absentee";
+import minutePreview from "./components/minutePreview";
 import {mountComponent} from "./mountComponent";
 import { Turbo } from "@hotwired/turbo-rails";
 
@@ -22,3 +23,5 @@ mountComponent('topic_form', TopicForm);
 mountComponent('other_form', OtherForm);
 mountComponent('next_date_form', NextDateForm)
 mountComponent('absentee', Absentee);
+
+mountComponent('minute_preview', minutePreview);
