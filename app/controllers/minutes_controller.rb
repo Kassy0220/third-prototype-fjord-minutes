@@ -10,6 +10,13 @@ class MinutesController < ApplicationController
   # GET /minutes/1 or /minutes/1.json
   def show
     @markdown = MarkdownBuilder.new(@minute).build
+    @day_attendees = @minute.attendances.where(time: :day).includes(:member).pluck(:email)
+                            .map{ |email| "- [#{email.slice(/^[^@]+/)}](#)" }.join("\n    ")
+    @night_attendees = @minute.attendances.where(time: :night).includes(:member).pluck(:email)
+                               .map{ |email| "- [#{email.slice(/^[^@]+/)}](#)" }.join("\n    ")
+    @topics = @minute.topics.map{ |topic| "- #{topic.content}" }.join("\n")
+    @absent_members = @minute.attendances.where(time: :absence).includes(:member).pluck(:email, :absence_reason, :progress_report)
+                                .map{ |absence| "- [#{absence[0].slice(/^[^@]+/)}](#)\n  - 欠席理由: #{absence[1]}\n  - 進捗報告: #{absence[2]}" }.join("\n")
   end
 
   # GET /minutes/new
