@@ -4,7 +4,7 @@
 
 <div>
   <%= link_to "Edit this minute", edit_minute_path(@minute) %> |
-  <%= link_to "Back to minutes", minutes_path %>
+  <%= link_to "Back to minutes", course_minutes_path(@minute.course) %>
 
   <%= button_to "Destroy this minute", @minute, method: :delete %>
 </div>

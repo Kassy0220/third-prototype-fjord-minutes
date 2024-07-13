@@ -14,6 +14,6 @@ module MinuteHelper
     topics.map{ |topic| "- #{topic.content}" }.join("\n")
   end
   def formatted_date(minute)
-    minute.next_date.strftime('%Y年%m月%d日')
+    minute.next_date&.strftime('%Y年%m月%d日')
   end
 end

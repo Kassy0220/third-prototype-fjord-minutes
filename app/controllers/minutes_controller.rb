@@ -4,7 +4,8 @@ class MinutesController < ApplicationController
 
   # GET /minutes or /minutes.json
   def index
-    @minutes = Minute.all.order(:created_at)
+    @course = Course.find(params[:course_id])
+    @minutes = @course.minutes.order(:created_at)
   end
 
   # GET /minutes/1 or /minutes/1.json
@@ -16,6 +17,7 @@ class MinutesController < ApplicationController
 
   # GET /minutes/new
   def new
+    @course = Course.find(params[:course_id])
     @minute = Minute.new
   end
 
@@ -25,7 +27,8 @@ class MinutesController < ApplicationController
 
   # POST /minutes or /minutes.json
   def create
-    @minute = Minute.new(minute_params)
+    course = Course.find(params[:course_id])
+    @minute = course.minutes.new(minute_params)
 
     respond_to do |format|
       if @minute.save

@@ -37,5 +37,5 @@
 
 <div>
   <%= link_to "Show this minute", @minute %> |
-  <%= link_to "Back to minutes", minutes_path %>
+  <%= link_to "Back to minutes", course_minutes_path(@minute.course) %>
 </div>

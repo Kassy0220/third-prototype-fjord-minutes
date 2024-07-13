@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_26_213308) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_12_230825) do
   create_table "attendances", force: :cascade do |t|
     t.integer "time"
     t.string "absence_reason"
@@ -21,6 +21,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_213308) do
     t.datetime "updated_at", null: false
     t.index ["member_id"], name: "index_attendances_on_member_id"
     t.index ["minute_id"], name: "index_attendances_on_minute_id"
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.string "name"
+    t.integer "meeting_week"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "members", force: :cascade do |t|
@@ -43,6 +50,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_213308) do
     t.string "title"
     t.text "other"
     t.date "next_date"
+    t.integer "course_id", null: false
+    t.index ["course_id"], name: "index_minutes_on_course_id"
   end
 
   create_table "topics", force: :cascade do |t|
@@ -55,5 +64,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_213308) do
 
   add_foreign_key "attendances", "members"
   add_foreign_key "attendances", "minutes"
+  add_foreign_key "minutes", "courses"
   add_foreign_key "topics", "minutes"
 end

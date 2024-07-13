@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Minutes</h1>
+<h1>Minutes(<%= @course.name %>)</h1>
 
 <div id="minutes">
   <% @minutes.each do |minute| %>
@@ -13,8 +13,14 @@
   <% end %>
 </div>
 
-<%= link_to "New minute", new_minute_path %>
-
+<div>
+  <div>
+    <%= link_to "議事録作成", new_course_minute_path(@course) %>
+  </div>
+  <div>
+    <%= link_to "#{@course.name}詳細", course_path(@course) %>
+  </div>
+</div>
 <% unless member_signed_in? %>
   <div>
     <p>

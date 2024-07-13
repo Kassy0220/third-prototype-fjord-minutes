@@ -1,9 +1,9 @@
 <h1>New minute</h1>
 
-<%= render "form", minute: @minute %>
+<%= render "form", course: @course, minute: @minute %>
 
 <br>
 
 <div>
-  <%= link_to "Back to minutes", minutes_path %>
+  <%= link_to "Back to minutes", course_minutes_path(@course) %>
 </div>

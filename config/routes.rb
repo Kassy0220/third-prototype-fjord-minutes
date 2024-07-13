@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :members
 
-  resources :minutes do
+  resources :courses do
+    resources :minutes, only: [:index, :new, :create]
+  end
+
+  resources :minutes, only: [:show, :edit, :update, :destroy] do
     resources :attendances, only: [:new, :create, :edit, :update], controller: "minutes/attendances"
   end
 
@@ -12,7 +16,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "minutes#index"
+  root "courses#index"
 
   namespace :api do
     resources :minutes, only: [:show, :update] do
