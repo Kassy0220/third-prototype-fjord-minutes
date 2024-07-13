@@ -56,10 +56,11 @@ class MinutesController < ApplicationController
 
   # DELETE /minutes/1 or /minutes/1.json
   def destroy
+    course = @minute.course
     @minute.destroy!
 
     respond_to do |format|
-      format.html { redirect_to minutes_url, notice: "Minute was successfully destroyed." }
+      format.html { redirect_to course_minutes_url(course), notice: "Minute was successfully destroyed." }
       format.json { head :no_content }
     end
   end
