@@ -8,8 +8,7 @@ class MeetingSecretary
 
     private
     def prepare(course)
-      create_minute course
-      # TODO: 議事録作成時の通知処理を追加
+      create_minute(course)
       # TODO: ミーティング開催日の通知処理を追加
     end
 
@@ -21,6 +20,7 @@ class MeetingSecretary
       title = "ふりかえり・計画ミーティング#{meeting_date.strftime('%Y年%m月%d日')}"
 
       course.minutes.create!(title:, date: meeting_date, next_date: next_meeting_date)
+      # TODO: 議事録作成時の通知処理を追加
     end
 
     def calc_next_meeting_date(date, course)
