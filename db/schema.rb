@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_13_002853) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_15_095056) do
   create_table "attendances", force: :cascade do |t|
     t.integer "time"
     t.string "absence_reason"
@@ -52,6 +52,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_002853) do
     t.date "next_date"
     t.integer "course_id", null: false
     t.date "date"
+    t.index ["course_id", "date"], name: "index_minutes_on_course_id_and_date", unique: true
     t.index ["course_id"], name: "index_minutes_on_course_id"
   end
 
