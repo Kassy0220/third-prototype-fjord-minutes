@@ -13,14 +13,19 @@ class MeetingSecretary
     end
 
     def create_minute(course)
-      # TODO: 議事録作成処理の条件を追加
       latest_minute = course.minutes.order(:created_at).last
+      return unless meeting_was_held_yesterday?(latest_minute)
+
       meeting_date = latest_minute.next_date
       next_meeting_date = calc_next_meeting_date(meeting_date, course)
       title = "ふりかえり・計画ミーティング#{meeting_date.strftime('%Y年%m月%d日')}"
 
       course.minutes.create!(title:, date: meeting_date, next_date: next_meeting_date)
       # TODO: 議事録作成時の通知処理を追加
+    end
+
+    def meeting_was_held_yesterday?(minute)
+      minute.date == Time.zone.yesterday
     end
 
     def calc_next_meeting_date(date, course)
