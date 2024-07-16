@@ -1,5 +1,7 @@
 class MeetingSecretary
-  @logger = Logger.new("#{Rails.root}/log/meeting_secretary.log")
+  @logger = Logger.new("#{Rails.root}/log/meeting_secretary.log", formatter: proc {|severity, datetime, progname, msg|
+    "[#{severity}] #{datetime.strftime('%Y-%m-%d %H:%M:%S')}: #{msg}\n"
+  })
   class << self
     def prepare_for_meeting
       @logger.info('prepare_for_meeting executed')
