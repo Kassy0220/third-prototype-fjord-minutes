@@ -1,8 +1,7 @@
 class MeetingSecretary
-  @logger = Logger.new("#{Rails.root}/log/meeting_secretary.log")
   class << self
     def prepare_for_meeting
-      @logger.info('prepare_for_meeting executed')
+      Rails.logger.info('prepare_for_meeting executed')
       # TODO: フロントエンドコースでも作成できるようにする
       course = Course.first
       prepare course
@@ -17,7 +16,7 @@ class MeetingSecretary
     def create_minute(course)
       latest_minute = course.minutes.order(:created_at).last
       unless meeting_was_held_yesterday?(latest_minute)
-        @logger.info("create_minute wasn't executed #{{ 'course' => course.name }}")
+        Rails.logger.info("create_minute wasn't executed #{{ 'course' => course.name }}")
         return
       end
 
@@ -26,7 +25,7 @@ class MeetingSecretary
       title = "ふりかえり・計画ミーティング#{meeting_date.strftime('%Y年%m月%d日')}"
 
       new_minute = course.minutes.create!(title:, date: meeting_date, next_date: next_meeting_date)
-      @logger.info("create_minute executed #{{ 'course' => course.name, new_minute_id: new_minute.id }}")
+      Rails.logger.info("create_minute executed #{{ 'course' => course.name, new_minute_id: new_minute.id }}")
       # TODO: 議事録作成時の通知処理を追加
     end
 
