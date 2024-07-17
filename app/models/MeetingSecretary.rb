@@ -15,7 +15,7 @@ class MeetingSecretary
 
     def create_minute(course)
       latest_minute = course.minutes.order(:created_at).last
-      unless meeting_was_held_yesterday?(latest_minute)
+      unless latest_minute.meeting_was_already_held?
         Rails.logger.info("create_minute wasn't executed #{{ 'course' => course.name }}")
         return
       end
@@ -27,10 +27,6 @@ class MeetingSecretary
       new_minute = course.minutes.create!(title:, date: meeting_date, next_date: next_meeting_date)
       Rails.logger.info("create_minute executed #{{ 'course' => course.name, new_minute_id: new_minute.id }}")
       # TODO: 議事録作成時の通知処理を追加
-    end
-
-    def meeting_was_held_yesterday?(minute)
-      minute.date == Time.zone.yesterday
     end
 
     def calc_next_meeting_date(date, course)
