@@ -34,9 +34,7 @@ class MeetingSecretary
     end
 
     def calc_next_meeting_date(date, course)
-      week_of_month = calc_week_of_month(date)
-
-      week_of_month <= 2 ? date + 2.weeks : next_month_meeting_date(date, course)
+      date.day <= 14 ? date + 2.weeks : next_month_meeting_date(date, course)
     end
 
     def calc_week_of_month(date)
@@ -48,6 +46,7 @@ class MeetingSecretary
       next_month = date.month <= 11 ? date.month + 1 : 1
       year = date.month <= 11 ? date.year : date.year + 1
 
+      # TODO: ミーティング開催の曜日を定数/変数に格納するようにして、その曜日を全て取得するようにする all_days_of_next_month_meeting
       all_wednesdays_of_next_month = all_wednesdays_of_month(year, next_month)
       course.odd_meeting_week? ?
         Time.zone.local(year, next_month, all_wednesdays_of_next_month.first)
