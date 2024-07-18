@@ -1,4 +1,6 @@
 class MeetingSecretary
+  @day_of_the_week_for_meeting = { '日曜日' => 0, '月曜日' => 1, '火曜日' => 2, '水曜日' => 3, '木曜日' => 4, '金曜日' => 5, '土曜日' => 6 }['水曜日']
+
   class << self
     def prepare_for_meeting
       Rails.logger.info('prepare_for_meeting executed')
@@ -33,37 +35,31 @@ class MeetingSecretary
       date.day <= 14 ? date + 2.weeks : next_month_meeting_date(date, course)
     end
 
-    def calc_week_of_month(date)
-      all_wednesdays = all_wednesdays_of_month(date.year, date.month)
-      all_wednesdays.index(date.day) + 1
-    end
-
     def next_month_meeting_date(date, course)
-      next_month = date.month <= 11 ? date.month + 1 : 1
       year = date.month <= 11 ? date.year : date.year + 1
+      next_month = date.month <= 11 ? date.month + 1 : 1
 
-      # TODO: ミーティング開催の曜日を定数/変数に格納するようにして、その曜日を全て取得するようにする all_days_of_next_month_meeting
-      all_wednesdays_of_next_month = all_wednesdays_of_month(year, next_month)
+      meeting_days = all_meeting_days_in_month(year, next_month)
       course.odd_meeting_week? ?
-        Time.zone.local(year, next_month, all_wednesdays_of_next_month.first)
-        : Time.zone.local(year, next_month, all_wednesdays_of_next_month.second)
+        Time.zone.local(year, next_month, meeting_days.first)
+        : Time.zone.local(year, next_month, meeting_days.second)
     end
 
-    def all_wednesdays_of_month(year, month)
-      wednesdays = []
+    def all_meeting_days_in_month(year, month)
+      meeting_days = []
 
       first_day = Date.new(year, month, 1)
-      last_day = Date.new(year, month, -1)
+      last_day = first_day.end_of_month
 
-      current_day = first_day
-      current_day += 1 until current_day.wday == 3
+      meeting_day = first_day
+      meeting_day += 1 until meeting_day.wday == @day_of_the_week_for_meeting
 
-      while current_day <= last_day
-        wednesdays << current_day.day
-        current_day += 7
+      while meeting_day <= last_day
+        meeting_days << meeting_day.day
+        meeting_day += 7
       end
 
-      wednesdays
+      meeting_days
     end
   end
 end
