@@ -28,7 +28,7 @@ class MeetingSecretary
 
       new_minute = course.minutes.create!(title:, date: meeting_date, next_date: next_meeting_date)
       Rails.logger.info("create_minute executed #{{ 'course' => course.name, new_minute_id: new_minute.id }}")
-      # TODO: 議事録作成時の通知処理を追加
+      Discord::Notifier.message(NotificationMessageTemplate.create_message(:create, course, new_minute)) if new_minute
     end
 
     def calc_next_meeting_date(date, course)
