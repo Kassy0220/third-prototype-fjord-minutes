@@ -9,7 +9,7 @@
   <div>
     <div>Markdown</div>
     <pre id="raw_markdown">
-<%= MinuteTemplate.build(minute, attendees_list(day_attendees), attendees_list(night_attendees), topics_list(topics), formatted_date(minute), absentees_list(absent_members)) %>
+<%= MinuteTemplate.build(minute, attendees_list(day_attendees), attendees_list(night_attendees), topics_list(topics), format_date(minute.next_date), absentees_list(absent_members)) %>
     </pre>
   </div>
 </div>
