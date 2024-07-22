@@ -4,9 +4,8 @@ class MeetingSecretary
   class << self
     def prepare_for_meeting
       Rails.logger.info('prepare_for_meeting executed')
-      # TODO: フロントエンドコースでも作成できるようにする
-      course = Course.first
-      prepare course
+      all_courses = Course.all
+      all_courses.each { |course| prepare course }
     end
 
     private
