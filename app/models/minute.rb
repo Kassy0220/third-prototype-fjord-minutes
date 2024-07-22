@@ -7,4 +7,8 @@ class Minute < ApplicationRecord
   def meeting_was_already_held?
     date.before? Time.zone.today
   end
+
+  def meeting_is_today?
+    date == Time.zone.today
+  end
 end
