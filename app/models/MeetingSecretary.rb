@@ -11,7 +11,7 @@ class MeetingSecretary
     private
     def prepare(course)
       create_minute(course)
-      # TODO: ミーティング開催日の通知処理を追加
+      notify_today_meeting(course)
     end
 
     def create_minute(course)
@@ -61,6 +61,19 @@ class MeetingSecretary
       end
 
       meeting_days
+    end
+
+    def notify_today_meeting(course)
+      latest_minute = course.minutes.order(:created_at).last
+      if !latest_minute.meeting_is_today? || latest_minute.sent_invitation
+        Rails.logger.info("notify_today_meeting wasn't executed #{{ 'course' => course.name }}")
+        return
+      end
+
+      webhook_url = course.name == 'Railsエンジニアコース' ? ENV['RAILS_COURSE_WEBHOOK_URL'] : ENV['FRONTEND_COURSE_WEBHOOK_URL']
+      Discord::Notifier.message(NotificationMessageTemplate.create_message(:today_meeting, course, latest_minute), url: webhook_url)
+      Rails.logger.info("notify_today_meeting executed #{{ 'course' => course.name, 'today_meeting_minute' => latest_minute.id }}")
+      latest_minute.update!(sent_invitation: true)
     end
   end
 end
