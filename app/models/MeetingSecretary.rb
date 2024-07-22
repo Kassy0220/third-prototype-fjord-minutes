@@ -28,8 +28,7 @@ class MeetingSecretary
       new_minute = course.minutes.create!(title:, date: meeting_date, next_date: next_meeting_date)
       Rails.logger.info("create_minute executed #{{ 'course' => course.name, new_minute_id: new_minute.id }}")
 
-      webhook_url = course.name == 'Railsエンジニアコース' ? ENV['RAILS_COURSE_WEBHOOK_URL'] : ENV['FRONTEND_COURSE_WEBHOOK_URL']
-      Discord::Notifier.message(NotificationMessageTemplate.create_message(:create, course, new_minute), url: webhook_url) if new_minute
+      Discord::Notifier.message(NotificationMessageTemplate.create_message(:create, course, new_minute), url: webhook_url(course)) if new_minute
     end
 
     def calc_next_meeting_date(date, course)
@@ -70,10 +69,13 @@ class MeetingSecretary
         return
       end
 
-      webhook_url = course.name == 'Railsエンジニアコース' ? ENV['RAILS_COURSE_WEBHOOK_URL'] : ENV['FRONTEND_COURSE_WEBHOOK_URL']
-      Discord::Notifier.message(NotificationMessageTemplate.create_message(:today_meeting, course, latest_minute), url: webhook_url)
+      Discord::Notifier.message(NotificationMessageTemplate.create_message(:today_meeting, course, latest_minute), url: webhook_url(course))
       Rails.logger.info("notify_today_meeting executed #{{ 'course' => course.name, 'today_meeting_minute' => latest_minute.id }}")
       latest_minute.update!(sent_invitation: true)
+    end
+
+    def webhook_url(course)
+      course.name == 'Railsエンジニアコース' ? ENV['RAILS_COURSE_WEBHOOK_URL'] : ENV['FRONTEND_COURSE_WEBHOOK_URL']
     end
   end
 end
