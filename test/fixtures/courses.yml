@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  meeting_week: 1
+  name: Railsエンジニアコース
+  meeting_week: 0
 
 two:
-  name: MyString
+  name: フロントエンドエンジニアコース
   meeting_week: 1
