@@ -6,5 +6,6 @@
   <%= link_to "Edit this minute", edit_minute_path(@minute) %> |
   <%= link_to "Back to minutes", course_minutes_path(@minute.course) %>
 
+  <%= button_to 'GitHub Wiki にエクスポート', minute_exports_path(@minute)  %>
   <%= button_to "Destroy this minute", @minute, method: :delete %>
 </div>

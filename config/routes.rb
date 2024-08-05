@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :minutes, only: [:show, :edit, :update, :destroy] do
     resources :attendances, only: [:new, :create, :edit, :update], controller: "minutes/attendances"
+    resources :exports, only: [:create], controller: "minutes/exports"
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
