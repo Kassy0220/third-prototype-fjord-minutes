@@ -2,14 +2,17 @@ class GithubWikiManager
   include MinutesHelper
   include DateHelper
   BOOTCAMP_WORKING_DIRECTORY = Rails.root.join('bootcamp_wiki_repository').freeze
+  AGENT_WORKING_DIRECTORY = Rails.root.join('agent_wiki_repository').freeze
 
   def self.export_minute(minute)
-    new.export_minute(minute)
+    new(minute.course).export_minute(minute)
   end
 
-  def initialize
-    @git = Dir.exist?(BOOTCAMP_WORKING_DIRECTORY) ? Git.open(BOOTCAMP_WORKING_DIRECTORY, log: Logger.new(STDOUT))
-                                                  : Git.clone(ENV['BOOTCAMP_WIKI_URL'], BOOTCAMP_WORKING_DIRECTORY)
+  def initialize(course)
+    @working_directory = course.name == 'Railsエンジニアコース' ? BOOTCAMP_WORKING_DIRECTORY : AGENT_WORKING_DIRECTORY
+    wiki_url = course.name == 'Railsエンジニアコース' ? ENV['BOOTCAMP_WIKI_URL'] : ENV['AGENT_WIKI_URL']
+    @git = Dir.exist?(@working_directory) ? Git.open(@working_directory, log: Logger.new(STDOUT))
+                                          : Git.clone(wiki_url, @working_directory)
     set_github_account
     create_credential_file
   end
@@ -43,7 +46,7 @@ password #{ENV['GITHUB_ACCESS_TOKEN']}
   end
 
   def commit_minute(minute)
-    filepath = "#{BOOTCAMP_WORKING_DIRECTORY}/#{minute.title}.md"
+    filepath = "#{@working_directory}/#{minute.title}.md"
     minute_markdown = MinuteTemplate.build(minute, attendees_list(minute.day_attendees), attendees_list(minute.night_attendees), topics_list(minute.topics), format_date(minute.next_date), absentees_list(minute.absentees))
 
     File.open(filepath, 'w+') do |file|
