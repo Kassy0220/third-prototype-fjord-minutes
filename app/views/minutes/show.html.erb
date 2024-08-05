@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render 'minute', minute: @minute, day_attendees: @day_attendees, night_attendees: @night_attendees, topics: @minute.topics, absent_members: @absent_members %>
+<%= render 'minute', minute: @minute %>
 
 <div>
   <%= link_to "Edit this minute", edit_minute_path(@minute) %> |

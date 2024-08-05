@@ -3,8 +3,8 @@ class GithubWikiManager
   include DateHelper
   BOOTCAMP_WORKING_DIRECTORY = Rails.root.join('bootcamp_wiki_repository').freeze
 
-  def self.export_minute(minute, day_attendees, night_attendees, absent_members)
-    new.export_minute(minute, day_attendees, night_attendees, absent_members)
+  def self.export_minute(minute)
+    new.export_minute(minute)
   end
 
   def initialize
@@ -35,16 +35,16 @@ password #{ENV['GITHUB_ACCESS_TOKEN']}
     File.chmod(0600, credential_file_path)
   end
 
-  def export_minute(minute, day_attendees, night_attendees, absent_members)
+  def export_minute(minute)
     # TODO: 例外が発生した時の処理を書く
     @git.pull
-    commit_minute(minute, day_attendees, night_attendees, absent_members)
+    commit_minute(minute)
     @git.push('origin', 'master')
   end
 
-  def commit_minute(minute, day_attendees, night_attendees, absent_members)
+  def commit_minute(minute)
     filepath = "#{BOOTCAMP_WORKING_DIRECTORY}/#{minute.title}.md"
-    minute_markdown = MinuteTemplate.build(minute, attendees_list(day_attendees), attendees_list(night_attendees), topics_list(minute.topics), format_date(minute.next_date), absentees_list(absent_members))
+    minute_markdown = MinuteTemplate.build(minute, attendees_list(minute.day_attendees), attendees_list(minute.night_attendees), topics_list(minute.topics), format_date(minute.next_date), absentees_list(minute.absentees))
 
     File.open(filepath, 'w+') do |file|
       file.write minute_markdown

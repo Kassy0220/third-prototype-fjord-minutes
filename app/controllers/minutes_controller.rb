@@ -9,11 +9,7 @@ class MinutesController < ApplicationController
   end
 
   # GET /minutes/1 or /minutes/1.json
-  def show
-    @day_attendees = @minute.attendances.where(time: :day).includes(:member).pluck(:email)
-    @night_attendees = @minute.attendances.where(time: :night).includes(:member).pluck(:email)
-    @absent_members = @minute.attendances.where(time: :absence).includes(:member).pluck(:email, :progress_report)
-  end
+  def show; end
 
   # GET /minutes/new
   def new
