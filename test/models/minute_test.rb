@@ -13,7 +13,7 @@ class MinuteTest < ActiveSupport::TestCase
       refute minute.meeting_was_already_held?
     end
 
-    travel_to Time.zone.parse('2024-07-04') do
+    travel_to Time.zone.parse('2024-07-05') do
       assert minute.meeting_was_already_held?
     end
   end
