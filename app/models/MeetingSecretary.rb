@@ -10,8 +10,12 @@ class MeetingSecretary
 
     private
     def prepare(course)
-      create_minute(course)
+      exist_minute?(course) ? create_minute(course) : create_first_minute(course)
       notify_today_meeting(course)
+    end
+
+    def exist_minute?(course)
+      course.minutes.exists?
     end
 
     def create_minute(course)
@@ -60,6 +64,38 @@ class MeetingSecretary
       end
 
       meeting_days
+    end
+
+    def create_first_minute(course)
+      GithubWikiManager.new(course)
+      working_directory = course.name == 'Railsエンジニアコース' ? GithubWikiManager::BOOTCAMP_WORKING_DIRECTORY
+                                                               : GithubWikiManager::AGENT_WORKING_DIRECTORY
+
+      latest_meeting_date = get_latest_meeting_date_from_cloned_minutes(working_directory)
+      unless latest_meeting_date.before? Time.zone.today
+        Rails.logger.info("create_first_minute wasn't executed #{{ 'course' => course.name }}")
+        return
+      end
+
+      latest_minute_title = "ふりかえり・計画ミーティング#{latest_meeting_date.strftime('%Y年%m月%d日')}"
+      latest_minute_content = File.open("#{working_directory}/#{latest_minute_title}.md") { |file| file.read }
+      _, next_meeting_year, next_meeting_month, next_meeting_day = *latest_minute_content.match(/(\d{4})年(\d{2})月(\d{2})日（[日月火水木金土]）/)
+
+      meeting_date = Time.zone.local(next_meeting_year, next_meeting_month, next_meeting_day)
+      next_meeting_date = calc_next_meeting_date(meeting_date, course)
+      title = "ふりかえり・計画ミーティング#{meeting_date.strftime('%Y年%m月%d日')}"
+
+      new_minute = course.minutes.create!(title:, date: meeting_date, next_date: next_meeting_date)
+      Rails.logger.info("create_first_minute executed #{{ 'course' => course.name, new_minute_id: new_minute.id }}")
+    end
+
+    def get_latest_meeting_date_from_cloned_minutes(working_directory)
+      meeting_days = Dir.glob('ふりかえり・計画ミーティング*', base: working_directory).map do |filename|
+        _, year, month, day = *filename.match(/ふりかえり・計画ミーティング(\d{4})年(\d{2})月(\d{2})/)
+        Time.zone.local(year.to_i, month.to_i, day.to_i)
+      end
+
+      meeting_days.sort.last
     end
 
     def notify_today_meeting(course)
