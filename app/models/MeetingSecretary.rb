@@ -79,7 +79,7 @@ class MeetingSecretary
 
       latest_minute_title = "ふりかえり・計画ミーティング#{latest_meeting_date.strftime('%Y年%m月%d日')}"
       latest_minute_content = File.open("#{working_directory}/#{latest_minute_title}.md") { |file| file.read }
-      _, next_meeting_year, next_meeting_month, next_meeting_day = *latest_minute_content.match(/(\d{4})年(\d{2})月(\d{2})日（[日月火水木金土]）/)
+      _, next_meeting_year, next_meeting_month, next_meeting_day = *latest_minute_content.match(/(\d{4})年(\d{2})月(\d{2})日\([日月火水木金土]\)/)
 
       meeting_date = Time.zone.local(next_meeting_year, next_meeting_month, next_meeting_day)
       next_meeting_date = calc_next_meeting_date(meeting_date, course)
