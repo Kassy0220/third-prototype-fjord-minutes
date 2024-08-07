@@ -99,6 +99,11 @@ class MeetingSecretary
     end
 
     def notify_today_meeting(course)
+      unless exist_minute?(course)
+        Rails.logger.info("notify_today_meeting wasn't executed #{{ 'course' => course.name }}")
+        return
+      end
+
       latest_minute = course.minutes.order(:created_at).last
       if !latest_minute.meeting_is_today? || latest_minute.sent_invitation
         Rails.logger.info("notify_today_meeting wasn't executed #{{ 'course' => course.name }}")
