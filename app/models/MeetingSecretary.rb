@@ -87,6 +87,7 @@ class MeetingSecretary
 
       new_minute = course.minutes.create!(title:, date: meeting_date, next_date: next_meeting_date)
       Rails.logger.info("create_first_minute executed #{{ 'course' => course.name, new_minute_id: new_minute.id }}")
+      Discord::Notifier.message(NotificationMessageTemplate.create_message(:create, course, new_minute), url: webhook_url(course)) if new_minute
     end
 
     def get_latest_meeting_date_from_cloned_minutes(working_directory)
