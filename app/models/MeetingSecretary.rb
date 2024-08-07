@@ -93,7 +93,7 @@ class MeetingSecretary
     def get_latest_meeting_date_from_cloned_minutes(working_directory)
       meeting_days = Dir.glob('ふりかえり・計画ミーティング*', base: working_directory).map do |filename|
         _, year, month, day = *filename.match(/ふりかえり・計画ミーティング(\d{4})年(\d{2})月(\d{2})/)
-        Time.zone.local(year.to_i, month.to_i, day.to_i)
+        Date.new(year.to_i, month.to_i, day.to_i)
       end
 
       meeting_days.sort.last
