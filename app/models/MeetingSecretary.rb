@@ -1,5 +1,5 @@
 class MeetingSecretary
-  @day_of_the_week_for_meeting = { '日曜日' => 0, '月曜日' => 1, '火曜日' => 2, '水曜日' => 3, '木曜日' => 4, '金曜日' => 5, '土曜日' => 6 }['水曜日']
+  DAY_OF_THE_MEETING_FOR_MEETING = { '日曜日' => 0, '月曜日' => 1, '火曜日' => 2, '水曜日' => 3, '木曜日' => 4, '金曜日' => 5, '土曜日' => 6 }['水曜日']
 
   class << self
     def prepare_for_meeting
@@ -56,7 +56,7 @@ class MeetingSecretary
       last_day = first_day.end_of_month
 
       meeting_day = first_day
-      meeting_day += 1 until meeting_day.wday == @day_of_the_week_for_meeting
+      meeting_day += 1 until meeting_day.wday == DAY_OF_THE_MEETING_FOR_MEETING
 
       while meeting_day <= last_day
         meeting_days << meeting_day.day
