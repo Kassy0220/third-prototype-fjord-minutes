@@ -2,10 +2,22 @@ class Member < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: %i[github]
 
   has_many :attendances, dependent: :destroy
   has_many :minutes, through: :attendances
+
+  def self.from_omniauth(auth)
+    # TODO: ログイン時にユーザー情報を更新できる様にする
+    # find_or_create_byだと、GitHubアカウントを更新してログインしても、更新が反映されない
+    find_or_create_by(provider: auth.provider, uid: auth.uid) do |member|
+      member.email = auth.info.email
+      member.name = auth.info.nickname
+      member.avatar_url = auth.info.image
+      member.password = Devise.friendly_token[0, 20]
+    end
+  end
 
   def login_name
     email.slice(/^[^@]+/)
