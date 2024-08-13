@@ -1,0 +1,12 @@
+<h1>メンバー一覧</h1>
+
+<% @members.each do |member| %>
+  <div>
+    <!--GitHub認証を行っていないユーザーデータが存在するため、if条件をつけておく-->
+    <% if member.avatar_url %>
+      <%= image_tag(member.avatar_url, size: '50x50', alt: 'ユーザーのアイコン画像') %>
+    <% end %>
+    <!--GitHub認証を行っていないユーザーデータはlogin_nameを表示しておく-->
+    <%= link_to member.name ? member.name : member.login_name, member %>
+  </div>
+<% end %>

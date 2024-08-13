@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :members, controllers: { omniauth_callbacks: 'members/omniauth_callbacks' }
 
+  resources :members, only: [:index, :show]
+
   resources :courses do
     resources :minutes, only: [:index, :new, :create]
   end
