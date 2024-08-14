@@ -3,7 +3,7 @@ class Members::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :github
 
   def github
-    @member = Member.from_omniauth(request.env["omniauth.auth"])
+    @member = Member.from_omniauth(request.env["omniauth.auth"], request.env["omniauth.params"])
 
     if @member.persisted?
       sign_in_and_redirect @member

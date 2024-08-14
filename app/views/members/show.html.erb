@@ -6,3 +6,5 @@
 <% if @member.avatar_url %>
   <%= image_tag(@member.avatar_url, size: '100x100', alt: 'ユーザーのアイコン画像') %>
 <% end %>
+
+<p>所属コース : <%= @member.course.name %></p>

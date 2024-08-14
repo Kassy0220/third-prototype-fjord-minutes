@@ -7,8 +7,9 @@ class Member < ApplicationRecord
 
   has_many :attendances, dependent: :destroy
   has_many :minutes, through: :attendances
+  belongs_to :course
 
-  def self.from_omniauth(auth)
+  def self.from_omniauth(auth, params)
     # TODO: ログイン時にユーザー情報を更新できる様にする
     # find_or_create_byだと、GitHubアカウントを更新してログインしても、更新が反映されない
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |member|
@@ -16,6 +17,7 @@ class Member < ApplicationRecord
       member.name = auth.info.nickname
       member.avatar_url = auth.info.image
       member.password = Devise.friendly_token[0, 20]
+      member.course_id = params['course_id'].to_i
     end
   end
 
