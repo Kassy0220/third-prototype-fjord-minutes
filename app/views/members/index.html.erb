@@ -6,7 +6,6 @@
     <% if member.avatar_url %>
       <%= image_tag(member.avatar_url, size: '50x50', alt: 'ユーザーのアイコン画像') %>
     <% end %>
-    <!--GitHub認証を行っていないユーザーデータはlogin_nameを表示しておく-->
-    <%= link_to member.name ? member.name : member.login_name, member %>
+    <%= link_to member.login_name, member %>
   </div>
 <% end %>

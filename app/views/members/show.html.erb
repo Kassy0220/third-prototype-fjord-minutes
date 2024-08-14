@@ -1,6 +1,5 @@
 <h1>
-  <!--GitHub認証を行っていないユーザーデータはlogin_nameを表示しておく-->
-  <%= "#{@member.name ? @member.name : @member.login_name}のページ" %>
+  <%= "#{@member.login_name}のページ" %>
 </h1>
 
 <!--GitHub認証を行っていないユーザーデータが存在するため、if条件をつけておく-->

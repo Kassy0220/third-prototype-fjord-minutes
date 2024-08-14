@@ -20,6 +20,7 @@ class Member < ApplicationRecord
   end
 
   def login_name
-    email.slice(/^[^@]+/)
+    # GitHub認証を行っていないメンバーはnameを持たないため、メールアドレスの先頭を表示しておく(本番環境では削除)
+    name ? name : email.slice(/^[^@]+/)
   end
 end
