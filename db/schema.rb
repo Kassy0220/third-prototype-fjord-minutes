@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_14_054551) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_16_100434) do
   create_table "attendances", force: :cascade do |t|
     t.integer "time"
     t.string "absence_reason"
@@ -28,6 +28,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_054551) do
     t.integer "meeting_week"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "hiatuses", force: :cascade do |t|
+    t.integer "member_id", null: false
+    t.date "finished_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_hiatuses_on_member_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -73,6 +81,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_054551) do
 
   add_foreign_key "attendances", "members"
   add_foreign_key "attendances", "minutes"
+  add_foreign_key "hiatuses", "members"
   add_foreign_key "members", "courses"
   add_foreign_key "minutes", "courses"
   add_foreign_key "topics", "minutes"

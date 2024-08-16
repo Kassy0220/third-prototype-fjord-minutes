@@ -7,6 +7,7 @@ class Member < ApplicationRecord
 
   has_many :attendances, dependent: :destroy
   has_many :minutes, through: :attendances
+  has_many :hiatuses
   belongs_to :course
 
   def self.from_omniauth(auth, params)
