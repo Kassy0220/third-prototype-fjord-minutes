@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :members, controllers: { omniauth_callbacks: 'members/omniauth_callbacks' }
+  devise_for :members, controllers: { sessions: 'members/sessions', omniauth_callbacks: 'members/omniauth_callbacks' }
 
   resources :members, only: [:index, :show]
 
