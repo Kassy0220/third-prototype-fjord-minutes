@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :members, controllers: { sessions: 'members/sessions', omniauth_callbacks: 'members/omniauth_callbacks' }
 
-  resources :members, only: [:index, :show]
+  resources :members, only: [:index, :show] do
+    resources :hiatuses, only: [:create], controller: "members/hiatuses"
+  end
 
   resources :courses do
     resources :minutes, only: [:index, :new, :create]
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
     resources :attendances, only: [:new, :create, :edit, :update], controller: "minutes/attendances"
     resources :exports, only: [:create], controller: "minutes/exports"
   end
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
