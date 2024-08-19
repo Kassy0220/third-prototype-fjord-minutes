@@ -1,0 +1,13 @@
+.notice {
+    color: #33CC99;
+    padding: 0.5em;
+    border: 1px solid #33CC99;
+    border-radius: 10px;
+}
+
+.alert {
+    color: #FF3333;
+    padding: 0.5em;
+    border: 1px solid #FF3333;
+    border-radius: 10px;
+}
