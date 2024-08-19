@@ -10,6 +10,9 @@ class Member < ApplicationRecord
   has_many :hiatuses
   belongs_to :course
 
+  scope :active, -> { left_joins(:hiatuses).where(hiatuses: { id: nil }).or(where.not(hiatuses: { finished_at: nil })) }
+  scope :hiatus, -> { joins(:hiatuses).where(hiatuses: { finished_at: nil }) }
+
   def self.from_omniauth(auth, params)
     # TODO: ログイン時にユーザー情報を更新できる様にする
     # find_or_create_byだと、GitHubアカウントを更新してログインしても、更新が反映されない

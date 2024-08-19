@@ -1,0 +1,10 @@
+<div>
+  <!--GitHub認証を行っていないユーザーデータが存在するため、if条件をつけておく-->
+  <% if member.avatar_url %>
+    <%= image_tag(member.avatar_url, size: '50x50', alt: 'ユーザーのアイコン画像') %>
+  <% end %>
+  <%= link_to member.login_name, member %>
+  <span data-turbo="true">
+      <%= link_to "#{member.login_name}を休止中にする", member_hiatuses_path(member), data: { turbo_method: :post } %>
+    </span>
+</div>
