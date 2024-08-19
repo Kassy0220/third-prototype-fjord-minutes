@@ -1,11 +1,13 @@
 class Members::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Devise::Controllers::Rememberable
   skip_before_action :verify_authenticity_token, only: :github
+  skip_before_action :prohibit_hiatus_member_access, only: :github
 
   def github
     @member = Member.from_omniauth(request.env["omniauth.auth"], request.env["omniauth.params"])
 
     if @member.persisted?
+      @member.hiatuses.last.update(finished_at: Time.zone.now) if @member.hiatus?
       sign_in_and_redirect @member
       remember_me @member
       set_flash_message(:notice, :success, kind: "GitHub") if is_navigational_format?
