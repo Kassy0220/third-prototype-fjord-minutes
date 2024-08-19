@@ -10,7 +10,7 @@ class Member < ApplicationRecord
   has_many :hiatuses
   belongs_to :course
 
-  scope :active, -> { left_joins(:hiatuses).where(hiatuses: { id: nil }).or(where.not(hiatuses: { finished_at: nil })) }
+  scope :active, -> { where.not(id: hiatus.pluck(:id)) }
   scope :hiatus, -> { joins(:hiatuses).where(hiatuses: { finished_at: nil }) }
 
   def self.from_omniauth(auth, params)
@@ -28,5 +28,9 @@ class Member < ApplicationRecord
   def login_name
     # GitHub認証を行っていないメンバーはnameを持たないため、メールアドレスの先頭を表示しておく(本番環境では削除)
     name ? name : email.slice(/^[^@]+/)
+  end
+
+  def hiatus?
+    hiatuses.present? && hiatuses.exists?(finished_at: nil)
   end
 end
