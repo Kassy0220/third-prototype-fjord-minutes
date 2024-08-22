@@ -20,8 +20,11 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <% Course.all.each do |course| %>
-      <%= button_to "#{course.name}でサインイン", omniauth_authorize_path(resource_name, provider, course_id: course.id), data: { turbo: false } %><br />
-    <% end %>
+    <div>
+      <p><%= provider %>でログイン</p>
+      <% Course.all.each do |course| %>
+        <%= button_to "#{course.name}でサインイン", omniauth_authorize_path(resource_name, provider, course_id: course.id), data: { turbo: false } %><br />
+      <% end %>
+    </div>
   <% end %>
 <% end %>
