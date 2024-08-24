@@ -28,5 +28,8 @@ Rails.application.routes.draw do
     resources :minutes, only: [:show, :update] do
       resources :topics, only: [:index, :create], controller: "/api/minutes/topics"
     end
+    resources :members, only: [] do
+      resources :attendances, only: [:index], controller: "/api/members/attendances"
+    end
   end
 end

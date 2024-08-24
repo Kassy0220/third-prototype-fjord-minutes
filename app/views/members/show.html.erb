@@ -8,3 +8,5 @@
 <% end %>
 
 <p>所属コース : <%= @member.course.name %></p>
+
+<%= content_tag :div, id: 'attendance_list', data: {member_id: @member.id}.to_json do %><% end %>

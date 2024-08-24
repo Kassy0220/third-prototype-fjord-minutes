@@ -1,0 +1,15 @@
+.attendance_table {
+    border-collapse: collapse;
+}
+
+.attendance_table th {
+    padding: 0.5em;
+    border: solid 1px #000000;
+    text-align: center;
+}
+
+.attendance_table td {
+    padding: 0.5em;
+    border: solid 1px #000000;
+    text-align: center;
+}
