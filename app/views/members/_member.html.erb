@@ -6,5 +6,5 @@
   <%= link_to member.login_name, member %>
   <span data-turbo="true">
       <%= link_to "#{member.login_name}を休止中にする", member_hiatuses_path(member), data: { turbo_method: :post } %>
-    </span>
+  </span>
 </div>
