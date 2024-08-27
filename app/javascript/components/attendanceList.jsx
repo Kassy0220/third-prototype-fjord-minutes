@@ -19,7 +19,7 @@ export default function AttendanceList({ member_id }) {
             </thead>
             <tbody>
                 <tr>
-                    {attendances.map(attendance => <td key={attendance.id}>{attendance.attendance}</td>)}
+                    {attendances.map(attendance => <td key={attendance.id}>{attendance.attendance ?? '---'}</td>)}
                 </tr>
             </tbody>
         </table>

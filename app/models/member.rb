@@ -33,4 +33,36 @@ class Member < ApplicationRecord
   def hiatus?
     hiatuses.present? && hiatuses.exists?(finished_at: nil)
   end
+
+  def attendance_records
+    records = Minute.joins("LEFT JOIN (SELECT * FROM attendances WHERE member_id = #{id}) AS attendances ON minutes.id = attendances.minute_id")
+                    .where(course_id: course_id)
+                    .where(date: created_at..)
+
+    records = hiatus? ? records.where(date: ..day_of_hiatus).pluck(:id, :date, 'attendances.time', 'attendances.absence_reason')
+                      : records.pluck(:id, :date, 'attendances.time', 'attendances.absence_reason')
+
+    was_hiatus? ? reflect_hiatus_period(records) : records
+  end
+
+  private
+
+  def day_of_hiatus
+    hiatuses.last.created_at
+  end
+
+  def was_hiatus?
+    hiatuses.present? && hiatuses.where.not(finished_at: nil).any?
+  end
+
+  def reflect_hiatus_period(records)
+    # created_atはActiveSupport::TimeWithZoneのインスタンスで、cover?を使うと can't iterate from ActiveSupport::TimeWithZoneエラーが発生する
+    # そのため、Dateに変換しておく
+    hiatus_period = hiatuses.map{ |hiatus| hiatus.created_at.to_date..hiatus.finished_at }
+
+    records.map do |record|
+      hiatus_period.each { |period| record[2] = '休止中' if period.cover?(record[1]) }
+      record
+    end
+  end
 end
