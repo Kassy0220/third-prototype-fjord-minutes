@@ -2,7 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import fetcher from "../fetcher";
 
-export default function AttendanceList({ member_id }) {
+export default function AttendanceTable({ member_id }) {
     const { data, error, isLoading } = useSWR(`/api/members/${member_id}/attendances`, fetcher)
 
     if (error) return <p>エラーが発生しました</p>
