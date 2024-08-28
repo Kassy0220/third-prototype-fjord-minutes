@@ -16,7 +16,7 @@ export default function AttendanceTable({ year, records }) {
                 </thead>
                 <tbody>
                     <tr>
-                        {attendances.map(attendance => <td key={attendance.id}>{attendance.attendance ?? '---'}</td>)}
+                        {attendances.map(attendance => <TableData key={attendance.id} attendance={attendance.attendance} />)}
                     </tr>
                 </tbody>
             </table>
@@ -39,4 +39,12 @@ function separateDataIntoDateAndAttendance(data) {
 function formatDate(date) {
     const matched_date = date.match(/\d{4}-(\d{2})-(\d{2})/)
     return `${matched_date[1]}/${matched_date[2]}`
+}
+
+function TableData({ attendance }) {
+    const labels = { day: '昼', night: '夜', absence: '休', hiatus: '休止中' }
+
+    return (
+        <td>{attendance ? labels[attendance] : '---'}</td>
+    )
 }

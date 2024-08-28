@@ -61,7 +61,7 @@ class Member < ApplicationRecord
     hiatus_period = hiatuses.map{ |hiatus| hiatus.created_at.to_date..hiatus.finished_at }
 
     records.map do |record|
-      hiatus_period.each { |period| record[2] = '休止中' if period.cover?(record[1]) }
+      hiatus_period.each { |period| record[2] = 'hiatus' if period.cover?(record[1]) }
       record
     end
   end
