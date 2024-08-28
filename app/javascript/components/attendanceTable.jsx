@@ -2,27 +2,25 @@ import React from "react";
 import useSWR from "swr";
 import fetcher from "../fetcher";
 
-export default function AttendanceTable({ member_id }) {
-    const { data, error, isLoading } = useSWR(`/api/members/${member_id}/attendances`, fetcher)
-
-    if (error) return <p>エラーが発生しました</p>
-    if (isLoading) return <p>読み込み中</p>
-
-    const [dates, attendances] = separateDataIntoDateAndAttendance(data)
+export default function AttendanceTable({ year, records }) {
+    const [dates, attendances] = separateDataIntoDateAndAttendance(records)
 
     return (
-        <table className='attendance_table'>
-            <thead>
-                <tr>
-                    {dates.map(date => <th key={date.id}>{date.date}</th>)}
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    {attendances.map(attendance => <td key={attendance.id}>{attendance.attendance ?? '---'}</td>)}
-                </tr>
-            </tbody>
-        </table>
+        <div>
+            <p>{year}年</p>
+            <table className='attendance_table'>
+                <thead>
+                    <tr>
+                        {dates.map(date => <th key={date.id}>{date.date}</th>)}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {attendances.map(attendance => <td key={attendance.id}>{attendance.attendance ?? '---'}</td>)}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     )
 }
 
