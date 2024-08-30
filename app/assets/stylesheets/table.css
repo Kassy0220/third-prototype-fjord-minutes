@@ -1,5 +1,6 @@
 .attendance_table {
     border-collapse: collapse;
+    margin-bottom: 1em;
 }
 
 .attendance_table th {

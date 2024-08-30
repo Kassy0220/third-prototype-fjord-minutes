@@ -2,24 +2,33 @@ import React from "react";
 import Tooltip from "./Tooltip";
 
 export default function AttendanceTable({ year, records }) {
-    const [dates, attendances] = separateDataIntoDateAndAttendance(records)
+    const recordsPerHalfYear = records.length >= 13 ? [records.slice(0, 12), records.slice(12)] : [records]
 
     return (
         <div>
             <p>{year}年</p>
-            <table className='attendance_table'>
-                <thead>
-                    <tr>
-                        {dates.map(date => <th key={date.id}>{date.date}</th>)}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        {attendances.map(attendance => <TableData key={attendance.id} attendance={attendance.attendance} absence_reason={attendance.absence_reason} />)}
-                    </tr>
-                </tbody>
-            </table>
+            {recordsPerHalfYear.map((records) => <Table key={records[0][0]} records={records} />)}
         </div>
+    )
+}
+
+function Table({ records }) {
+    const [dates, attendances] = separateDataIntoDateAndAttendance(records)
+
+    return (
+        <table className='attendance_table'>
+            <thead>
+                <tr>
+                    {dates.map(date => <th key={date.id}>{date.date}</th>)}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {attendances.map(attendance => <TableData key={attendance.id} attendance={attendance.attendance}
+                                                              absence_reason={attendance.absence_reason}/>)}
+                </tr>
+            </tbody>
+        </table>
     )
 }
 
